@@ -57,10 +57,10 @@
 		
 			<!-- jackson 스케쥴사용하기 위한 -->
 		<dependency>
-		    <groupId>com.fasterxml.jackson.core</groupId>
-		    <artifactId>jackson-databind</artifactId>
-		    <version>2.1.1</version>
-		</dependency>	
+		  <groupId>com.fasterxml.jackson.core</groupId>
+		  <artifactId>jackson-databind</artifactId>
+		  <version>[2.8.11.1,)</version>
+		</dependency>
 		
 		
 		<!-- Logging -->
