@@ -1,0 +1,57 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+</head>
+
+<body>
+<!-- title -->
+<!-- 개봉일 open_date  -->
+<!-- 	시사회 preview_date -->
+<h1>시사회개봉일추가하기</h1>
+<form action="./schedule_add.do" method="post">
+	<table>
+	<tr>
+	<th>영화명</th>
+	<td><input type="text" name="scheduleContent"></td>
+	</tr>
+	<tr>
+	<th>개봉일 시작일</th>
+	<td><input type="date" name="startDate"></td>
+	<tr>
+	<th>개봉일 마지막일</th>
+	<td><input type="date" name="endDate"></td>
+	</tr>
+	<tr>
+	<th>시사회일</th>
+	<td><input type="date" name="previewdate"></td>
+	</tr>
+	
+		<tr>
+			<th colspan="2">
+				<input type="submit" value="추가">
+			</th>
+		</tr>
+	</table>
+</form>
+
+<h1>시사회개봉일삭제하기</h1>
+<form action="./schedule_del.do" method="post">
+	<table>
+	<tr>
+	<th>영화명</th>
+	<td><input type="text" name="scheduleContent"></td>
+		<tr>
+			<th colspan="2">
+				<input type="submit" value="삭제">
+			</th>
+		</tr>
+	</table>
+</form>
+
+
+</body>
+</html>

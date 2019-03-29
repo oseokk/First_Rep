@@ -1,0 +1,60 @@
+$(function(){
+	init();
+	$("#startDate,#endDate").datepicker({
+		dateFormat : "yy-mm-dd"
+	});
+});
+//스케쥴일정 
+function getSchedule() {
+	
+	var data = new Object();
+	data.title = $("#Mtitle").val();
+	JSON.stringify(data);
+	$.ajax({
+		url : './schedule_list.do',
+		type : 'POST',
+		data : data,
+		contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+		dataType : 'json',
+		success : function(responseData, status) {
+					for(var i=0;i<responseData.data.length;i++){
+							responseData.data[i].start = responseData.data[i].startDate;
+							responseData.data[i].end = responseData.data[i].endDate;
+							responseData.data[i].title = responseData.data[i].scheduleContent;
+					}
+					makeCalendar(responseData.data);
+		},
+		error : function() {
+			   alert("통신실패");
+		}
+	});
+};
+
+	function makeCalendar(event){
+		$('#calendar').fullCalendar({
+			height : 500,
+			header : {
+				left : 'prev,next today',
+				center : 'title',
+				right : 'month,agendaWeek,agendaDay'
+//,listWeek					
+			},
+			navLinks : true, // can click day/week names to navigate views
+			editable : true,
+			eventLimit : true, // allow "more" link when too many events
+			events : event
+		});
+	};
+
+function init() {
+	jQuery.browser = {};	
+	(function() {
+		jQuery.browser.msie = false;
+		jQuery.browser.version = 0;
+		if (navigator.userAgent.match(/MSIE ([0-9]+)\./)) {
+			jQuery.browser.msie = false;
+			jQuery.browser.version = RegExp.$1;
+		}
+	})();	
+	getSchedule();
+}

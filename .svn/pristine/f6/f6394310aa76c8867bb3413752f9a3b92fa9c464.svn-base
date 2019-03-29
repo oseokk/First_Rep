@@ -1,0 +1,110 @@
+<%@page import="seok.yun.na.dtos.NoticeDto"%>
+<%@page import="seok.yun.na.dtos.CinemaDto"%>
+<%@page import="java.util.List"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width" ,initial-scale="1">
+<link rel="stylesheet" href="css/bootstrap.css">
+<title>상세정보</title>
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript">
+		function notice_eForm(seq){
+		location.href="./notice_eForm.do?ntc_seq="+seq;
+	}
+</script>
+</head>
+<%
+	NoticeDto dto = (NoticeDto) request.getAttribute("dto");
+%>
+<body>
+	<nav class="navbar navbar-default">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed"
+				data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+				aria-expanded="false">
+				<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="adminMain.jsp">KOKOA SNMS</a>
+		</div>
+		<div class="collapse navbar-collapse"
+			id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				<li><a href="./adminMain.do">메인</a>
+				<li>
+   
+				<li class="active"><a href="./notice_list.do">게시판</a>
+				<li>
+    
+				<li><a href="./cinemaList.do">영화관</a>
+				<li>
+   
+				<li><a href="./schedulemanage.do">스케줄</a>
+				<li>
+  
+			</ul>
+  <ul class="nav navbar-nav navbar-right">
+   <li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+					role="button" aria-haspopup="true" aria-expanded="false">관리메뉴<span
+						class="caret"></span></a>
+  <ul class="dropdown-menu">
+   <li><a href="./logout.do">로그아웃</a></li>
+  </ul>
+  </li>
+  </ul>
+ </div>
+</nav>
+<div class="container">
+		<div class="row">
+	<table class="table table-striped"
+					style="text-align: center; border: 1px solid #dddddd">
+		<thead>
+						<tr>
+							<th colspan="4"
+								style="background-color: #eeeeee; text-align: center;">공지사항
+								글 보기</th>
+
+						</tr>
+					</thead>
+					<tbody>
+		<tr>
+			<td style="width: 20%">제목</td>
+			<td colspan="2"><%=dto.getTitle().replaceAll(" ","&nbsp;").replaceAll("<","&lt;").replaceAll(">","&gt;")%></td>
+					
+		</tr>
+		<tr>
+			<td>작성자</td>
+			<td colspan="2"><%=dto.getMem_id()%></td>
+							
+		</tr>
+		<tr>
+			<td>작성일자</td>
+			<td colspan="2"><%=dto.getRegdate()%></td>
+					
+		</tr>
+		<tr>
+			<td>내용</td>
+			<td colspan="2" style="min-height:200px; text-align: left;"><%=dto.getContent().replaceAll(" ","&nbsp;").replaceAll("<","&lt;").replaceAll(">","&gt;")%></td>
+					
+		</tr>		
+		
+				</tbody>
+	</table>
+	 <a href="./notice_list.do" class="btn btn-primary">목록</a>
+	 <a href="./notice_eForm.do?ntc_seq=<%=dto.getNtc_seq()%>" class="btn btn-primary">수정</a>
+	 <a href="./notice_sdelete.do?ntc_seq=<%=dto.getNtc_seq()%>" class="btn btn-primary">삭제</a>
+		</div>
+			</div>
+			<script type="text/javascript"
+				src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+			<script src="js/bootstrap.js"></script>
+</body>
+</html>
+
+

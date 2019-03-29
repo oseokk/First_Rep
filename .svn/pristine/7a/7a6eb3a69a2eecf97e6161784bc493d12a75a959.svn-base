@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="seok.yun.na">
+	<!-- 공지사항 리스트 출력 -->
+	<select id="notice_list" resultType="NoticeDto">
+	SELECT NTC_SEQ, MEM_ID,
+	REGDATE, TITLE, CONTENT, COUNT
+		FROM NOTICE
+	</select>
+	
+<!-- 공지사항 상세정보 출력 -->
+	<select id="notice_Detail" resultType="NoticeDto"
+		parameterType="java.lang.String">
+		SELECT NTC_SEQ, MEM_ID,
+		REGDATE, TITLE, CONTENT, COUNT
+		FROM NOTICE
+		WHERE NTC_SEQ
+		=#{ntc_seq} 
+	</select>
+
+
+	<!-- 공지사항 등록 -->
+	<insert id="notice_add" parameterType="NoticeDto">
+		INSERT INTO NOTICE
+(NTC_SEQ,MEM_ID, REGDATE, TITLE, CONTENT, COUNT)
+VALUES(NTC_SEQ.NEXTVAL, 'admin',SYSDATE,#{title},#{content},0)
+	</insert>
+	
+	<!-- 공지사항 수정 -->
+	<update id="notice_edit" parameterType="NoticeDto">
+		UPDATE NOTICE SET
+		TITLE=#{title},
+		CONTENT=#{content}
+		WHERE NTC_SEQ=#{ntc_seq}
+	</update>
+
+
+
+	<!-- 공지사항 다중삭제 기능 -->
+	<!-- seq_ : map key , seq: map value -->
+	<delete id="notice_delete" parameterType="java.util.Map">
+		DELETE FROM NOTICE
+		WHERE NTC_SEQ IN
+		<foreach collection="ntc_seq_" item="ntc_seq" open="("
+			separator="," close=")">
+			#{ntc_seq}
+		</foreach>
+	</delete>
+
+<!-- 공지사항 단일삭제 기능 -->
+<delete id="notice_sdelete" parameterType="NoticeDto">
+DELETE FROM NOTICE
+WHERE NTC_SEQ=#{ntc_seq}
+</delete>
+	
+</mapper>
+		

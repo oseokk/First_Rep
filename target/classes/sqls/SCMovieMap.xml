@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="seok.yun.na">
+
+		<!-- 나의 선호장르를 표출하는 기능 -->
+	<select id="social_genre" resultType="SCMovieDto" parameterType="java.lang.String">
+		SELECT GENRE_1, GENRE_2, GENRE_3
+			FROM MEMBERSHIP
+				WHERE MEM_ID=#{mem_id}
+	</select>
+	
+		<!-- 내가 본 영화 리스트 표출 기능 -->
+	<select id="social_movie" resultType="SCMovieDto" parameterType="java.lang.String">
+		SELECT MOVIECD, BOOKING_DATE FROM BOOKING WHERE MEM_ID=#{mem_id}
+	</select>
+	
+	<!-- 친구들이 작성한 영화평을 조회하는 기능 -->
+	<select id="social_frdCm" resultType="SCMovieDto" parameterType="java.util.Map">
+		<![CDATA[
+		SELECT MEM_ID, SCORE, SCOMMENT FROM SCMOVIE
+			WHERE MEM_ID IN (SELECT FRD_ID FROM FRIEND WHERE MEM_ID=#{mem_id})
+			AND MOVIECD = #{moviecd}
+			AND SCORE >= 0
+			AND ROWNUM <=6
+		ORDER BY SCM_SEQ DESC
+		]]>
+	</select>
+
+	<!-- 내가 좋아요한 영화 리스트를 표출하는 기능 -->
+	<select id="social_like" resultType="SCMovieDto" parameterType="java.lang.String">
+		SELECT SCM_SEQ, MOVIECD FROM SCMOVIE WHERE MEM_ID = #{mem_id}
+	</select>
+
+	<!-- 영화에 대한 코멘트 및 평점 작성 -->
+	<update id="scr_update" parameterType="SCMovieDto">
+		UPDATE SCMOVIE SET SCORE=#{score}, SCOMMENT=#{scomment}
+			WHERE MEM_ID=#{mem_id} AND MOVIECD=#{moviecd}
+	</update>
+
+	<!-- 영화에 대한 코멘트 및 평점 삭제 -->
+	<delete id="scr_delete" parameterType="SCMovieDto">
+	DELETE FROM SCMOVIE WHERE SCM_SEQ=#{scm_seq}
+	</delete>
+
+
+
+	<!-- 내가 작성한 평점 리스트를 표출하는 기능 -->
+	<select id="social_write" resultType="SCMovieDto" parameterType="java.lang.String">
+		SELECT MEM_ID, MOVIECD, SCORE, SCOMMENT
+			FROM SCMOVIE
+				WHERE MEM_ID = #{mem_id} AND SCORE >= 0
+			ORDER BY SCM_SEQ
+	</select>
+
+
+
+	<!-- 등록된 친구ID리스트 조회하는 기능 -->
+	<select id="frd_view" resultType="FriendDto" parameterType="java.lang.String">
+		SELECT MEM_ID, FRD_ID FROM FRIEND WHERE MEM_ID=#{mem_id}
+	</select>
+
+	<!-- 친구ID를 통해 친구를 추가하는 기능 - null 나올 수 있음 -->
+	<insert id="frd_add" parameterType="FriendDto">
+		INSERT INTO FRIEND
+			VALUES(FRD_SEQ.NEXTVAL, #{mem_id},
+			(SELECT MEM_ID FROM MEMBERSHIP WHERE MEM_ID=#{frd_id}))
+	</insert>
+
+	<!-- 친구ID를 통해 친구를 삭제하는 기능 -->
+	<delete id="frd_delete" parameterType="java.util.Map">
+		DELETE FROM FRIEND WHERE MEM_ID=#{mem_id} AND FRD_ID=#{frd_id}
+	</delete>
+</mapper>

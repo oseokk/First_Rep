@@ -1,0 +1,11 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>title</title>
+<%@include file="Header.jsp"%>
+
+	<a href="./msg_list.do?mem_id=${lDto.mem_id}">수신 메세지</a>
+	<a href="./msg_slist.do?mem_id=${lDto.mem_id}">발신 메시지</a>
+	<a href="./msgregForm.do?mem_id=${lDto.mem_id}">메세지 보내기</a>
+<%@include file="Footer.jsp"%>

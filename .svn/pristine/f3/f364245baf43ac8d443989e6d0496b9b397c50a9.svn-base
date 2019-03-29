@@ -1,0 +1,74 @@
+package seok.yun.na.util;
+
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.List;
+
+import seok.yun.na.dtos.MovieDto;
+
+
+public class Utility {
+	
+	//mdate를 날짜 형식으로 변경
+
+	private String toDates;
+	
+	public String getToDates() {
+		return toDates;
+	}
+	
+	public void setToDates(String open_date) {
+		//yyyymmddhhmiss -> yyyy" - "mm" - "dd" "hh" : "m" :00"
+		String m =open_date.substring(0, 4)+"-"
+				+open_date.substring(4,6)+"-"
+				+open_date.substring(6,8)+" "
+				+open_date.substring(8,10)+":"
+				+open_date.substring(10,12)+":00";
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy년MM월dd일 HH시mm분");
+		//상위 객체가 date
+		Timestamp tm = Timestamp.valueOf(m);
+		toDates = sdf.format(tm);
+	}
+
+	// 달력에 일부를 출력 하는 것
+	public static String getCalView(int i, List<MovieDto> clist) {
+		// i 하나의 일 5 -> 05
+		// clist 년월의 전체 글 : mdate 에 관한이야기 yyyymmddhhmiss 6:8
+		String d = isTwo(i + ""); // i 하나의 일 5 -> 05
+		// String d = isTwo(String.valueOf(i)); <- 맞는 문법 //i 하나의 일 5 -> 05
+		String result = "";
+
+		for (MovieDto dto : clist) { // 쿼리 결과 해당 일수 글의 3개만 가져옴.
+			if (dto.getOpen_date().substring(6, 8).equals(d)) {
+				result += "<p>";
+				result += (dto.getTitle().length() > 6) ? dto.getTitle().substring(0, 6) + "...." : dto.getTitle();
+				result += "</p>";
+			}
+
+		}
+
+		return result;
+
+	}// getCalView
+
+	public static String isTwo(String num) {
+		return (num.length() < 2) ? "0" + num : num;
+
+	}// isTwo
+
+	public static String fontColor(int date, int dayOfWeek) {
+		String color = "";
+
+		int calDay = (dayOfWeek - 1 + date) % 7;
+
+		if (calDay == 0) { // 토요일일때
+			color = "blue";
+		} else if (calDay == 1) { // 일요일일때
+			color = "red";
+		} else { // 기타등등, 평일일때
+			color = "black";
+		}
+		return color;
+	}// fontColor
+
+}// class

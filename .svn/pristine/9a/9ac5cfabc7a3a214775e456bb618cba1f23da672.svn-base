@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="seok.yun.na">
+
+<!--아이디 중복검사  -->
+<select id="user_dupl" 
+parameterType="java.lang.String" resultType="java.lang.Integer">
+SELECT COUNT(MEM_ID) 
+	FROM MEMBERSHIP 
+		WHERE MEM_ID =#{mem_id}
+</select>
+
+<!--회원가입  -->
+<insert id="user_join" parameterType="MembershipDto" >
+INSERT INTO MEMBERSHIP
+		(MEM_ID, MEM_PW, NICKNAME,
+ 		MEM_BDAY, MEM_PHONE, MEM_POINT, 
+ 		MEM_LEVEL,MEM_DEL,GENRE_1, GENRE_2, GENRE_3)
+	VALUES(#{mem_id}, #{mem_pw}, #{nickname},
+ 		TO_DATE(#{mem_bday},'YYYY-MM-DD'), #{mem_phone},0,
+ 				'N','Y', #{genre_1}, #{genre_2}, #{genre_3})
+</insert>
+
+<select id="selString" parameterType="MembershipDto" resultType="java.lang.String">
+  	SELECT MEM_PW FROM MEMBERSHIP WHERE MEM_ID = #{mem_id}
+</select>
+
+
+
+<!--로그인  -->
+<select id="user_login"
+ parameterType="MembershipDto" resultType="MembershipDto">
+	SELECT MEM_ID,NICKNAME,MEM_DEL FROM MEMBERSHIP  
+		WHERE MEM_ID = #{mem_id}
+<!-- AND MEM_PW = #{mem_pw} -->
+</select>
+
+<!--회원정보 조회  -->
+<select id="user_confirm"
+ parameterType="java.lang.String" resultType="MembershipDto">
+	SELECT MEM_ID,NICKNAME,MEM_PW,MEM_PHONE,MEM_BDAY,MEM_POINT,GENRE_1,GENRE_2,GENRE_3,MEM_DEL
+	FROM MEMBERSHIP WHERE MEM_ID =#{mem_id}
+</select> 
+
+<!--회원정보 수정  -->
+<update id = "user_edit" parameterType="MembershipDto">
+	UPDATE MEMBERSHIP
+	SET NICKNAME=#{nickname},MEM_PW=#{mem_pw},MEM_PHONE=#{mem_phone},
+	GENRE_1=#{genre_1},GENRE_2=#{genre_2},GENRE_3=#{genre_3}
+	WHERE MEM_ID=#{mem_id}
+</update>
+
+<!-- 회원탈퇴  -->
+<update id="user_delete" parameterType="MembershipDto">
+UPDATE MEMBERSHIP
+ SET MEM_DEL='N' WHERE MEM_ID = #{mem_id}
+</update>
+
+<!--관심영화 중복검사  -->
+<select id="like_dupl" 
+parameterType="SCMovieDto" resultType="java.lang.Integer">
+SELECT COUNT(MEM_ID) 
+	FROM SCMOVIE 
+		WHERE MEM_ID =#{mem_id}
+		AND MOVIECD =#{moviecd}
+</select>
+</mapper>

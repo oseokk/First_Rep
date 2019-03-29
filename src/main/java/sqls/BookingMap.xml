@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="seok.yun.na">
+
+	<!-- 예매하는 기능 -->
+	<insert id="book_select" parameterType="BookingDto" >
+		<selectKey resultType="java.lang.String" keyProperty="booking_num" order="BEFORE"> 
+			SELECT TO_CHAR(SYSTIMESTAMP, 'YYYYMMDDHH24MISSFF3') FROM DUAL
+		</selectKey>
+			INSERT INTO BOOKING (BOOKING_NUM, SEAT_CD, MEM_ID, 
+							PLAY_CD, MOVIECD, PLAYHALL_CD, BOOKING_DATE ,TIC_PAY)
+				VALUES (#{booking_num}, #{seat_cd}, #{mem_id}, 
+							#{play_cd}, #{moviecd}, #{playhall_cd}, TO_DATE(SYSDATE,'YYYY-MM-DD'), 'N')
+	</insert>
+	
+	<insert id="bookseat_select" parameterType="BookingDto">
+		INSERT INTO BOOK_SEAT (BOOKING_NUM,SEAT_CD)
+			VALUES(#{booking_num}, #{seat_cd})
+	</insert>
+	
+	<!-- 예매 내역을 출력하는 기능 --> 
+	<select id="book_view" resultType="BookingDto" parameterType="java.lang.String">
+		SELECT A.MEM_ID,A.BOOKING_NUM, M.TITLE, P.PLAY_DATE,P.START_TIME, P.END_TIME, PM.PLAYHALL_NAME, BS.SEAT_CD, A.TIC_PAY,PM.TITLE CIN_NAME, PM.SUB_TITLE,BS.SEATROW, BS.SEATCOL
+			FROM PLAYINFO P JOIN 	
+				(SELECT MEM_ID,BOOKING_NUM,CIN_NAME, PLAY_CD, MOVIECD ,PLAYHALL_CD, TIC_PAY 
+					FROM BOOKING 
+					WHERE MEM_ID=#{mem_id}) A
+			ON P.PLAY_CD = A.PLAY_CD
+				JOIN MOVIE M
+					ON M.MOVIECD = A.MOVIECD
+				JOIN (SELECT C.TITLE,C.SUB_TITLE,PH.PLAYHALL_CD,PH.PLAYHALL_NAME FROM PLAYHALL PH, CINEMA C WHERE PH.CIN_CD=C.CIN_CD) PM
+					ON A.PLAYHALL_CD = PM.PLAYHALL_CD
+				JOIN (SELECT SS.SEATROW,SS.SEATCOL,BB.BOOKING_NUM,BB.SEAT_CD FROM BOOK_SEAT BB, SEAT SS WHERE BB.SEAT_CD=SS.SEAT_CD) BS
+					ON A.BOOKING_NUM = BS.BOOKING_NUM
+	</select>
+	
+	<!-- 예매를 취소 하는 기능 / 예매 좌석도 같이 삭제되어야함 --> 
+	<!-- seq_: map key , seq: map value -->
+	<delete id="book_delete" parameterType="java.util.Map">
+		DELETE FROM BOOKING WHERE BOOKING_NUM IN 
+				<foreach collection="booking_num_" item="booking_num"  open="(" separator="," close=")">#{booking_num}</foreach>
+	</delete>
+	<delete id="bookseat_delete" parameterType="java.util.Map">
+		DELETE FROM BOOK_SEAT WHERE BOOKING_NUM IN 
+				<foreach collection="booking_num_" item="booking_num" open="(" separator="," close=")">#{booking_num}</foreach>
+	</delete>
+	
+	<!-- 예매내역 결제 기능 -->
+	<update id="pay_book"  parameterType="java.lang.String">
+			UPDATE BOOKING SET TIC_PAY = 'Y' 
+				WHERE BOOKING_NUM = #{booking_num}
+	</update>
+	
+	<!-- 영화관 위치를 알려주는 기능 -->
+	<select id="map_loc" resultType="CinemaDto" parameterType="java.util.Map">
+		SELECT CIN_CD,TITLE,SUB_TITLE,ADDRESS,ROAD_ADDRESS,LATITUDE,LONGITUDE 
+			FROM CINEMA 
+				WHERE SUBSTR(ADDRESS,1,2)= #{address} AND TITLE = #{title}
+	</select>
+	
+<!-- 	<select id="map_show" resultType="CinemaDto" parameterType="java.util.Map"> -->
+<!-- 		SELECT CIN_CD,TITLE,SUB_TITLE,ADDRESS,ROAD_ADDRESS,LATITUDE,LONGITUDE  -->
+<!-- 			FROM CINEMA  -->
+<!-- 				WHERE LATITUDE(LATITUDE)= #{address} AND LONGITUDE = #{longitude} -->
+<!-- 	</select> -->
+	
+		<!-- 영화관 위치를 알려주는 기능 -->
+	<select id="map_show" resultType="CinemaDto" parameterType="java.util.Map">
+		SELECT CIN_CD,TITLE,SUB_TITLE,ADDRESS,ROAD_ADDRESS,LATITUDE,LONGITUDE 
+			FROM CINEMA 
+				WHERE LATITUDE=#{latitude} AND LONGITUDE=#{longitude}
+	</select>
+
+	<!-- 영화관코드를 가지고 영화를 뿌리는 기능 -->
+	<select id="book_movie" resultType="BookingDto" parameterType="java.lang.String">
+		SELECT PM.CIN_CD,PM.PLAYHALL_CD,M.TITLE, PM.MOVIECD
+			FROM MOVIE M, PLAYMOVIE PM
+				WHERE PM.MOVIECD=M.MOVIECD AND CIN_CD = #{cin_cd}
+	</select>
+	
+	<!-- 영화관코드를 가지고 상영영화정보를 뿌리는 기능 -->
+	<select id="book_play" resultType="BookingDto" parameterType="java.util.Map">
+		SELECT P.PLAY_CD,PM.MOVIECD,PM.PLAYHALL_CD,PM.CIN_CD,P.PLAY_DATE,P.START_TIME ,P.END_TIME,PM.PLAYHALL_NAME
+			FROM PLAYINFO P, PLAYMOVIE PM 
+				WHERE P.MOVIECD=PM.MOVIECD  AND PM.CIN_CD = #{cin_cd} AND PM.MOVIECD = #{moviecd} 
+	</select>
+	
+	<!-- 영화관코드를 가지고 상영영화정보를 뿌리는 기능 -->
+	<select id="book_seat" resultType="CinemaDto" parameterType="java.util.Map">
+		SELECT DISTINCT PH.CIN_CD,PH.PLAYHALL_CD, S.SEAT_CD, S.SEATROW , S.SEATCOL
+			FROM PLAYMOVIE PM, PLAYHALL PH, SEAT S 
+				WHERE PH.PLAYHALL_CD= PM.PLAYHALL_CD
+					AND PH.PLAYHALL_CD=S.PLAYHALL_CD	
+					AND PH.CIN_CD = #{cin_cd}
+					AND PH.PLAYHALL_CD = #{playhall_cd}
+					ORDER BY S.SEAT_CD
+	</select>
+	
+</mapper>

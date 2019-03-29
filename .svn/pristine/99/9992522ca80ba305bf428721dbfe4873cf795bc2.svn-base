@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="seok.yun.na">
+   <!-- 영화관 리스트 출력 -->
+   <select id="cinemaList" resultType="CinemaDto">
+      SELECT
+      CIN_CD,SUB_TITLE,TITLE,ADDRESS,ROAD_ADDRESS
+      FROM CINEMA
+      WHERE
+      AVAILABILITY ='Y'
+   </select>
+
+   <!-- 영화관 상세정보 출력 -->
+   <select id="cin_Detail" resultType="CinemaDto"
+      parameterType="java.lang.String">
+      SELECT CIN_CD,SUB_TITLE, TITLE, ADDRESS, ROAD_ADDRESS,
+      PLAYHALL_CD,PLAYHALL_NAME
+      FROM CINEMA JOIN PLAYHALL
+      USING(CIN_CD)
+      WHERE CIN_CD
+      =#{cin_cd}
+      ORDER BY PLAYHALL_NAME 
+   </select>
+
+   <!-- 상영관 상세정보 출력 -->
+   <select id="phall_Detail" resultType="CinemaDto"
+      parameterType="java.lang.String">
+      SELECT PLAYHALL_CD,SEATROW,SEATCOL
+      FROM PLAYHALL JOIN SEAT
+      USING(PLAYHALL_CD)
+      WHERE PLAYHALL_CD=#{playhall_cd}
+   </select>
+
+      <!-- 영화관 등록 -->
+      <insert id="cinema_add" parameterType="CinemaDto">
+         <selectKey keyProperty="cin_cd" resultType="string"
+            order="BEFORE">
+            (SELECT TO_CHAR(MAX(CIN_CD)+1) FROM CINEMA)
+         </selectKey>
+         INSERT INTO CINEMA
+         (CIN_CD, SUB_TITLE, TITLE,
+         ADDRESS, ROAD_ADDRESS,
+         LATITUDE,
+         LONGITUDE)
+         VALUES(#{cin_cd},#{sub_title},#{title},
+         #{address},#{road_address},#{latitude},
+         #{longitude})
+      </insert>
+
+      <!-- 상영관 등록 -->
+      <insert id="playhall_add" parameterType="CinemaDto">
+         <selectKey keyProperty="playhall_cd" resultType="string"
+            order="BEFORE">
+            (SELECT TO_CHAR(MAX(PLAYHALL_CD)+1)FROM PLAYHALL)
+         </selectKey>
+         INSERT INTO PLAYHALL
+         (PLAYHALL_CD, CIN_CD, PLAYHALL_NAME)
+         VALUES(#{playhall_cd},#{cin_cd},#{playhall_name})
+      </insert>
+
+      <!-- 상영관 좌석 등록 -->
+      <insert id="seat_add" parameterType="CinemaDto">
+         INSERT INTO SEAT
+         (SEAT_CD,
+         PLAYHALL_CD, SEATROW, SEATCOL)
+         VALUES((SELECT
+         TO_CHAR(MAX(TO_NUMBER(SEAT_CD))+1) FROM SEAT), #{playhall_cd},
+         #{seatrow}, #{seatcol})
+      </insert>
+
+      <!-- 영화관 삭제 기능 -->
+      <!-- seq_ : map key , seq: map value -->
+      <update id="cinema_delete" parameterType="java.util.Map">
+         UPDATE CINEMA
+         SET AVAILABILITY ='N'
+         WHERE CIN_CD IN
+         <foreach collection="cin_cd_" item="cin_cd" open="("
+            separator="," close=")">
+            ${cin_cd}
+         </foreach>
+      </update>
+
+      <!-- 영화 '좋아요'버튼 선택 기능 -->
+      <insert id="movie_like" parameterType="SCMovieDto">
+         INSERT INTO
+         SCMOVIE(SCM_SEQ, MEM_ID, MOVIECD, LIKEY, SCORE, SCOMMENT)
+         VALUES(SCM_SEQ.NEXTVAL, #{mem_id}, #{moviecd}, 'Y', '', '')
+      </insert>
+
+      <!-- 영화 '좋아요'버튼 취소 기능 -->
+      <update id="movie_like2" parameterType="SCMovieDto">
+         UPDATE SCMOVIE SET
+         LIKEY='N'
+         WHERE MEM_ID=#{mem_id} AND MOVIECD=#{moviecd}
+      </update>
+
+      <!-- 영화의 평점을 출력하는 기능 -->
+      <select id="movie_score" resultType="SCMovieDto"
+         parameterType="java.lang.String">
+         SELECT MEM_ID, SCORE, SCOMMENT,MOVIECD
+         FROM SCMOVIE
+         WHERE MOVIECD
+         = #{moviecd}
+         AND SCOMMENT IS NOT NULL
+         ORDER BY SCM_SEQ DESC
+      </select>
+</mapper>
+      

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="seok.yun.na">
+
+<!--개봉일 시사회 일정 달력에 표출 영화명,개봉일,시사회일  -->
+<select id="sch_view" resultType="MovieDto">
+SELECT TITLE SCHEDULECONTENT,
+	OPEN_DATE STARTDATE,
+			OPEN_DATEC ENDDATE FROM SCHEDULE
+</select>
+
+<!-- 시사회 일정 달력에 등록 !-->
+<insert id="sch_add" parameterType="MovieDto">
+INSERT INTO KOKOA.SCHEDULE
+(TITLE, OPEN_DATE, OPEN_DATEC)
+VALUES(#{scheduleContent},#{startDate},#{endDate})
+</insert>
+
+
+<!-- /*시사회 일정을 달력에 삭제*/ -->
+<update id="sch_delete" parameterType="MovieDto">
+UPDATE KOKOA.SCHEDULE
+	SET OPEN_DATE=null, OPEN_DATEC=null
+			WHERE TITLE=#{scheduleContent}
+</update>
+
+
+
+
+
+</mapper>

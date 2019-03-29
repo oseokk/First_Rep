@@ -1,0 +1,323 @@
+@charset "UTF-8";
+/* common */
+.contents{
+	background-color: white;
+}
+h3{
+width : 100%;
+height:50px;
+background-color:#dcedc2;
+text-align: justify;
+line-height: 50px;
+    -webkit-margin-before: 0px;
+    -webkit-margin-after: 0px
+}
+a{
+	font-weight: bold;
+	color: black;
+	text-decoration: none;
+	font-size: 12pt;
+}
+img{
+width: 150px;
+height: 215px;
+}
+.img_btn_size{
+	width: 20px;
+	height: 20px;
+}
+.slide_btn{
+	float:
+	width:30px;
+	height: 300px;
+	border: 1px solid #2f9599;
+	background: #2f9599;
+	color: #ffffff;
+	font-size: 14px;
+	font-family: helvetica, serif;
+	text-decoration: none;
+	vertical-align: middle;
+}
+.slide_btn:active {
+
+	 border: 1px solid #547980;
+	 background: #547980;
+	 color: #ffffff;
+}
+
+/* table */
+tbody tr:nth-child(even) {background: #fff5ee;}
+tbody tr:nth-child(odd) {background: #ffffff;}
+
+tr{
+	height: 40px;
+}
+.td1{
+	width: 100px;
+}
+.td2{
+	width: 100px;
+}
+.td3{
+	width: 300px;
+	text-align: justify;
+}
+
+/* 1. 관람영화리스트 */
+#watched_movie{
+	width : 100%;
+	height: 300px;
+	background-color: #2c2c2c;
+}
+#watched_name{
+	height : 35px;
+	color: white;
+	text-align: justify;
+}
+#watched_img{
+	margin-left: 50px;
+	width : 180px;
+	height: 250px;
+	background-color: white;
+	padding-left: 3px;
+}
+#watched_score{
+	margin-top:-250px;
+	margin-left: 250px;
+	width : 500px;
+	height : 250px;
+	background-color: white;
+}
+#changeOpen_name:link{
+	text-decoration: none;
+	color:#fff;
+}
+#changeOpen_name:visited{
+	text-decoration: none;
+	color:#fff;
+}
+#change_img{
+	margin-top: 17.5px;
+}
+/* //1// */
+
+/* 2. 관심영화리스트 */
+#fav_movie{
+	width : 100%;
+	height: 300px;
+	background-color: #2c2c2c;
+}
+
+#fav_box{
+	margin:0 auto;
+	text-align: center;
+	position:relative;
+	display: block;
+	top:15px;
+	width:740px;
+	height:270px;
+	overflow: hidden;
+	float: left;
+}
+.fav_content{
+	margin-left: 15px;
+	width : 166px;
+	height: 270px;
+	background-color: white;
+	font-size: 8pt;
+	float: left;
+  	position: relative;
+}
+.fav_content img{
+	margin-top: 8px;
+}
+
+.fav_del_btn{
+position: absolute;
+top: -0%;
+left: 85%;
+display: none;
+width: 20px;
+height: 20px;
+border:2px solid #fff;
+}
+.fav_wrt_btn{
+position: absolute;
+top: 80%;
+left: 5%;
+display: none;
+width: 20px;
+height: 20px;
+}
+/* /2/ */
+
+/* 3.내 작성 댓글 */
+#my_comment{
+	width :100%;
+	height: 100%;
+	margin-top: 20px;
+}
+#updown{
+	float: right;
+	margin: 10px;
+	background-color: #2f9599;
+	color:#fff;
+	border : 1px solid #2f9599;
+}
+
+/* /3/ */
+
+/* 4. 친구 목록 */
+#frd_list{
+	position:fixed;
+	top:75px;
+	float: right;
+	width: 200px;
+	background-color: oldlace;
+	border:2px solid black;
+	right: -320px;
+	padding: 10px;
+}
+.frd_open_btn{
+	  width: 50px;
+	  height: 50px;
+	  position: absolute;
+	  right: 10px;
+	  top: 6px;
+	  z-index: 1;
+	  background-image: url("../images/people.png");
+	  background-repeat: no-repeat;
+	  background-position: center;
+	  cursor: pointer;
+}
+.frd_close_btn {
+	  width: 20px;
+	  height: 32px;
+	  background-image: url("../images/close.png");
+	  background-repeat: no-repeat;
+	  background-position: center;
+	  cursor: pointer;
+	  margin: auto;
+	  position: absolute;
+	  right: 15px;
+} 
+ .frd_dd{
+	margin-left: 20px;
+	text-align: left;
+	vertical-align:text-bottom;
+	font-weight: bold;
+	width: 150px;
+} 
+dl{
+padding: 0px 20px 20px 20px;
+margin-bottom: -10px;
+}
+.person{
+	width: 20px;
+	height: 20px;
+	position: relative;
+	margin: -5px 5px 5px 5px;
+}
+#frd_social{
+	  width: 170px;
+  margin-left: 5px;
+  background-color: white;
+  padding: 0px 10px 0px 10px;
+	text-align: center;
+	font-size: 10pt;
+	position: relative;
+	height: 320px;
+	display:none;
+}
+#frd_left_btn{
+	  position: absolute;
+	  margin-top:-20px;
+	  background-color:#fff;
+display:none;
+top:150px;
+}
+#frd_right_btn{
+	background-color:#fff;
+	margin-top:-20px;
+	position: absolute;
+ 	display:none;
+	top:150px;
+	left:150px;
+}
+#frd_movie{
+	width: 150px;
+    margin-left: 10px;
+	text-align: center;
+}
+
+#frd_box{
+	margin:0 auto;
+	height:260px;
+	text-align: center;
+	position:relative;
+	display: block;
+	top:10px;
+	overflow: hidden;
+}
+.frd_del{
+	width: 15px;
+	height: 15px;
+	position: relative;
+	float:right;
+	margin: 5px 5px -5px 5px;
+	display: none;
+}
+#frd_x{
+position: fixed;
+right: 20px;
+height: 20px;
+display:none;
+}
+/* /4/ */
+
+#write_form{
+	border: 1px solid black;
+	background: #dcedc2;
+	position: absolute;
+	top: 50%;
+	left: 30%;
+	display: none;
+	z-index: 5;
+	width: 300px;
+}
+.star{
+    background: url('http://miuu227.godohosting.com/images/icon/ico_review.png') no-repeat -52px 0;
+    background-size: auto 100%;
+    width: 30px;
+    height: 30px;
+    float:left;
+    text-indent: -9999px;
+    cursor: pointer;
+}
+.star.on{background-position:0 0;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* #update_x{border: 1px solid #000000;
+     background: #000000;
+     border-radius: 20px;
+     color: #ffffff;
+     font-size: 12px;
+font-weight: bold;	
+float:left;
+position: relative;
+} */
+
+

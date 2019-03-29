@@ -1,0 +1,17 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="css/singlePageTemplate.css" rel="stylesheet" type="text/css">
+<title>title</title>
+	<div class="maincontents">
+		<div class="title_box_bk">
+			 <div class="myinfo_title">
+				<a href="./msg_list.do?mem_id=${lDto.mem_id}" class="ahref">수신 메세지</a>
+				<a href="./msg_slist.do?mem_id=${lDto.mem_id}" class="ahref">발신 메시지</a>
+				<a href="./msgregForm.do?mem_id=${lDto.mem_id}" class="ahref">메세지 보내기</a>
+			 </div>
+		</div>
+	</div>
+
+

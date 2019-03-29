@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="seok.yun.na">
+	<!-- 받은 메세지 - 전체메세지 -->
+	<select id="msg_list" resultType="MessageDto" parameterType="java.lang.String">
+		SELECT MSG_SEQ, MEM_ID, MCONTENT,FRD_ID ,MDATE FROM MESSAGE WHERE FRD_ID=#{mem_id}
+	</select>
+
+	<!-- 받은 메세지 - 안읽은 메세지 -->
+	<select id="msg_nlist" resultType="MessageDto" parameterType="java.lang.String">
+		SELECT MEM_ID, MCONTENT,
+		MDATE FROM MESSAGE WHERE FRD_ID=#{mem_id} AND READCHEK ='N'
+	</select>
+	
+	<!-- 보낸 메세지 -->
+	<select id="msg_slist" resultType="MessageDto" parameterType="java.lang.String">
+		SELECT MSG_SEQ,FRD_ID, MCONTENT, MDATE FROM MESSAGE WHERE MEM_ID=#{mem_id}
+	</select>
+
+
+	<!-- 메세지 작성 -->
+	<insert id="msg_send" parameterType="MessageDto">
+		<!-- 메세지 작성 -->
+		INSERT INTO MESSAGE
+		(MSG_SEQ, MEM_ID, FRD_ID, MCONTENT,MDATE)
+		VALUES(MSG_SEQ.NEXTVAL,#{mem_id},#{frd_id},#{mcontent},SYSDATE)
+	</insert>
+
+	<!-- 메세지 삭제 기능 -->
+	<!-- seq_ : map key , seq: map value -->
+	<delete id="msg_delete" parameterType="java.util.Map">
+		DELETE FROM MESSAGE
+		WHERE MSG_SEQ IN
+		<foreach collection="msg_seq_" item="msg_seq" open="("
+			separator="," close=")">
+			#{msg_seq}
+		</foreach>
+<!-- 		AND MEM_ID = ${mem_id} -->
+	</delete>
+
+
+</mapper>
+		

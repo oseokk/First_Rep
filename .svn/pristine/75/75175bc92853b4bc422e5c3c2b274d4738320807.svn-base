@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KOKOA</title>
+<link href="css/singlePageTemplate.css" rel="stylesheet" type="text/css">
+<!--The following script tag downloads a font from the Adobe Edge Web Fonts server for use within the web page. We recommend that you do not modify it.-->
+<script>var __adobewebfontsappname__="dreamweaver"</script>
+<script src="http://use.edgefonts.net/source-sans-pro:n2:default.js" type="text/javascript"></script>
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<!-- Main Container -->
+<div class="container"> 
+  <!-- Navigation -->
+  <header> 
+	  <div class="headmenu"><a href="">
+    <h4 class="logo">KOKOA</h4>
+    </a>
+    <nav>
+      <ul>
+        <li><a href="#hero">MOVIE</a></li>
+        <li><a href="#about">SOCIAL</a></li>
+        
+      </ul>
+    </nav>
+	 </div>
+  </header>
+	<div class="maincontents">
+	<div class="title_box_bk">
+		<div class="booking_title">
+		  <p>예매내역</p>
+		</div>
+		
+	</div>
+	<div class="booking_contents_box">	
+		<div class="list_box" id="left">
+			<div class="pay_list_title"><li></li>포인트</div>
+			<div class="pay_list_con">
+				<div class="pay_kind_list">
+					<div class="pay_kind">차감포인트</div>
+					<input class="pay_input_1">
+				</div>
+				<div class="pay_kind_list">
+					<div class="pay_kind">가용포인트</div>
+					<input class="pay_input_1">
+				</div>
+			</div>
+			<div class="pay_list_title"><li></li>카드정보</div>
+			<div class="pay_list_con">
+				<div class="pay_kind_list">
+					<div class="pay_kind">카드종류</div>
+					<input class="pay_input_1">
+				</div>
+				<div class="pay_kind_list">
+					<div class="pay_kind">카드번호</div>
+					
+						<div class="input_flex">
+							<input class="pay_input_4"><input class="pay_input_4"><input class="pay_input_4"><input class="pay_input_4">
+						</div>
+					
+				</div>
+				<div class="pay_kind_list">
+					<div class="pay_kind">유효기간</div>
+					<div class="input_flex">
+						<input class="pay_input_2"><input class="pay_input_2">
+					</div>
+				</div>
+				<div class="pay_kind_list">
+					<div class="pay_kind">비밀번호</div>
+					<div class="input_flex">
+						<input class="pay_input_2"><a>**</a>
+					</div>
+				</div>
+				<div class="pay_kind_list">
+					<div class="pay_kind">생년월일</div>
+					<div class="input_flex">
+						<input class="pay_input_2">
+					</div>
+				</div>
+			</div>
+			
+			
+			
+			
+			
+		
+			
+		</div>
+		
+		
+		<div class="list_box" id="right">
+			<div class="bkng_list_title" id="pay_empty"></div>
+				
+			<div class="pay_list_title"><li></li>총결제금액</div>
+			<div class="bkng_info">
+				
+				<input class="num" value="15,000">
+				<div class="num" id="won">원</div>
+				
+			</div>
+			<div class="pay_detail">
+				
+				<ul class="dtldBrkdw_left_box">
+					<li>예매총액</li>
+					<li>할인금액</li>
+				</ul>
+				<ul class="dtldBrkdw_right_box">
+					<li><input class="dtl_input" value="15,000"></li>
+					<li><input class="dtl_input" value="(-) 15,000"></li>
+				</ul>
+				
+				
+			</div>
+			
+		</div>
+		
+		
+	</div>
+	<div class="booking_contents_box">
+		
+		
+		
+		<div class="list_box">
+			
+			<div class="bkng_btn" id="pay_bottom">
+				<input value="예매하기" type="button" class="btn">
+				<input value="취소" type="button" class="btn_gray" >
+			</div>
+		</div>
+	</div>	
+	</div>
+		
+  <!-- Copyrights Section -->
+	
+  <div class="copyright">&copy;2018 - <strong>KOKOA</strong></div>
+
+</div>
+<!-- Main Container Ends -->
+</body>
+</html>

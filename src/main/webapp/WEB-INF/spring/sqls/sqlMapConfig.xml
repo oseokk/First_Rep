@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
+<configuration>
+<typeAliases>
+	<typeAlias type="seok.yun.na.dtos.MovieDto" alias="MovieDto"/>	
+	<typeAlias type="seok.yun.na.dtos.CinemaDto" alias="CinemaDto"/>	
+	<typeAlias type="seok.yun.na.dtos.FriendDto" alias="FriendDto"/>	
+	<typeAlias type="seok.yun.na.dtos.SCMovieDto" alias="SCMovieDto"/>	
+	<typeAlias type="seok.yun.na.dtos.BookingDto" alias="BookingDto"/>	
+	<typeAlias type="seok.yun.na.dtos.MembershipDto" alias="MembershipDto"/>	
+	<typeAlias type="seok.yun.na.dtos.NoticeDto" alias="NoticeDto"/>	
+	<typeAlias type="seok.yun.na.dtos.MessageDto" alias="MessageDto"/>	
+</typeAliases>
+
+<mappers>
+	<mapper resource="/sqls/Cinema.xml"/>
+	<mapper resource="/sqls/SCMovieMap.xml"/>
+	<mapper resource="/sqls/BookingMap.xml"/>
+	<mapper resource="/sqls/MembershipMap.xml"/>
+	<mapper resource="/sqls/movieMap.xml"/>
+	<mapper resource="/sqls/Notice.xml"/>
+	<mapper resource="/sqls/Message.xml"/>
+</mappers>
+
+</configuration>

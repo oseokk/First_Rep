@@ -1,0 +1,98 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style type="text/css">
+
+	#form{
+	display: inline-block;	
+	text-align: center;
+	}
+	
+	table {
+	text-align: left;
+}
+
+
+
+table.msgregForm {
+   	display : inline-block;
+    border-collapse: separate;
+    border-spacing: 1px;
+    text-align: center;
+    line-height: 1.5;
+    margin: 20px 10px;
+}
+table.msgregForm th {
+    width: 155px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    color: black;
+    background: #EFFBFB;
+}
+table.msgregForm td {
+    width: 155px;
+    padding: 10px;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+    background: #eee;
+}
+
+
+
+</style>
+<title>메세지 전송 화면</title>
+<script type="text/javascript">
+	
+	function returnView(){
+		history.go(-1);
+	}
+
+	
+</script>
+	
+<%@include file="Header.jsp"%>
+	<div><%@include file="messagemenu.jsp"%></div>
+<div id="form">
+<h3>친구에게 메세지 보내기</h3>
+<form action="./msg_send.do" method="post">
+	<table class="msgregForm">
+		<tr>
+			<th>보내는 사람 (나)</th>
+			<td>
+				<input type="text" id="mem_id" readonly="readonly"  name="mem_id" value="${lDto.mem_id}" style="width:200px;text-align: center; font-size: 15;">
+			</td>
+		</tr>
+		<tr>
+			<th>받는 사람 ID</th>
+			<td>
+				<input type="text" id="frd_id" name="frd_id"  placeholder="아이디를 입력하세요." style="width:200px;">
+			</td>
+		</tr>
+		<tr>
+			<th>메세지 내용</th>
+			<td>
+				<input type="text" id="mcontent" name="mcontent"  placeholder="보낼 내용을 입력해주세요!" style="width:500px;height:300px;">
+			</td>
+		</tr>
+
+				<tr>
+			<th colspan="2">
+				<input type="submit" value="보내기">
+				<input type="button" value="취소" onclick="returnView()">
+			</th>
+		</tr>
+	</table>
+</form>
+</div>
+<%@include file="Footer.jsp"%>
+
+
+
+
+
+
+
+
